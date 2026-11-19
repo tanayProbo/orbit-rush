@@ -1,0 +1,335 @@
+@font-face {
+  font-family: 'OrbitronLocal';
+  src: local('Orbitron'), local('Segoe UI'), local('Arial');
+  font-display: swap;
+}
+
+:root {
+  --bg-dark: #050711;
+  --neon-cyan: #00f3ff;
+  --neon-pink: #ff2a85;
+  --neon-gold: #ffd166;
+  --neon-red: #ff2e4c;
+  --font-main: 'OrbitronLocal', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  color: #ffffff;
+  font-family: var(--font-main);
+  touch-action: none;
+}
+
+#game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* HUD */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hud-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.score-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.level-badge {
+  padding: 1px 6px;
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.score-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(0, 243, 255, 0.6);
+  line-height: 1.1;
+}
+
+.combo-badge {
+  margin-top: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--neon-gold);
+  color: var(--neon-gold);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.nova-block {
+  flex: 1;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.nova-label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  color: var(--neon-cyan);
+  margin-bottom: 5px;
+}
+
+.nova-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.4);
+  overflow: hidden;
+}
+
+.nova-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+  transition: width 0.12s ease-out;
+}
+
+.hud-controls {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(5, 7, 17, 0.8);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  border-color: var(--neon-cyan);
+}
+
+/* Clean Arcade Overlays (No rounded AI card) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 7, 17, 0.72);
+  z-index: 20;
+  padding: 20px;
+}
+
+.arcade-screen {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 24px 16px;
+  border-top: 2px solid var(--neon-cyan);
+  border-bottom: 2px solid var(--neon-cyan);
+  background: rgba(5, 7, 17, 0.88);
+}
+
+.arcade-title {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 18px rgba(0, 243, 255, 0.55);
+}
+
+.arcade-sub {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.arcade-best {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.arcade-best span {
+  color: var(--neon-gold);
+  font-weight: 800;
+  font-size: 20px;
+  margin-left: 6px;
+}
+
+.arcade-heading {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #ffffff;
+}
+
+.arcade-heading.danger {
+  color: var(--neon-red);
+  text-shadow: 0 0 14px rgba(255, 46, 76, 0.6);
+}
+
+.arcade-new-best {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--neon-gold);
+}
+
+.arcade-stats {
+  display: flex;
+  gap: 32px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.arcade-stats span {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 4px;
+}
+
+.arcade-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.arcade-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.arcade-btn {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.arcade-btn:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(0, 243, 255, 0.12);
+}
+
+.arcade-btn.primary {
+  border-color: var(--neon-cyan);
+  background: var(--neon-cyan);
+  color: #050711;
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.arcade-btn.primary:hover {
+  background: #4df7ff;
+}
+
+.arcade-btn.gold {
+  border-color: var(--neon-gold);
+  color: var(--neon-gold);
+  background: rgba(255, 209, 102, 0.12);
+}
+
+/* Keybinds Tutorial List */
+.keybinds-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.kb-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.kb-row kbd {
+  padding: 3px 7px;
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  font-family: var(--font-main);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .arcade-title { font-size: 32px; }
+  .score-value { font-size: 24px; }
+}

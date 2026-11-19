@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>ORBIT RUSH</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js" async></script>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- In-Game HUD -->
+    <div id="hud" class="hidden">
+      <div class="hud-top">
+        <div class="score-block">
+          <div class="score-label">SCORE <span id="levelBadge" class="level-badge">LVL 1</span></div>
+          <div id="scoreValue" class="score-value">0</div>
+          <div id="comboBadge" class="combo-badge hidden">x1</div>
+        </div>
+
+        <div class="nova-block">
+          <div class="nova-label">NOVA</div>
+          <div class="nova-bar-bg">
+            <div id="novaBarFill" class="nova-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="hud-controls">
+          <button id="muteBtn" class="icon-btn" aria-label="Toggle Sound (M)" title="Toggle Sound (M)">🔊</button>
+          <button id="pauseBtn" class="icon-btn" aria-label="Pause (P)" title="Pause (P)">⏸</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Menu (Clean Arcade Overlay) -->
+    <div id="menuOverlay" class="overlay">
+      <div class="arcade-screen">
+        <h1 class="arcade-title">ORBIT RUSH</h1>
+        <p class="arcade-sub">HOLD TO ORBIT &bull; RELEASE TO FLING</p>
+
+        <div class="arcade-best">
+          BEST <span id="menuBestScore">0</span>
+        </div>
+
+        <div class="arcade-actions">
+          <button id="playBtn" class="arcade-btn primary">[SPACE / ENTER] LAUNCH</button>
+          <div class="arcade-row">
+            <button id="menuKeybindsBtn" class="arcade-btn">[H] KEYBINDS</button>
+            <button id="menuMuteBtn" class="arcade-btn">[M] SOUND: ON</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keybinds Tutorial Window -->
+    <div id="keybindsOverlay" class="overlay hidden">
+      <div class="arcade-screen">
+        <h2 class="arcade-heading">KEYBINDS</h2>
+        <div class="keybinds-list">
+          <div class="kb-row"><kbd>SPACE</kbd><span>Hold to Orbit / Release to Fling</span></div>
+          <div class="kb-row"><kbd>A</kbd> / <kbd>D</kbd><span>Steer Left / Right (or Orbit Dir)</span></div>
+          <div class="kb-row"><kbd>ENTER</kbd><span>Launch / Play Again</span></div>
+          <div class="kb-row"><kbd>P</kbd> / <kbd>ESC</kbd><span>Pause / Resume</span></div>
+          <div class="kb-row"><kbd>R</kbd><span>Quick Restart (Paused)</span></div>
+          <div class="kb-row"><kbd>M</kbd><span>Mute / Unmute Sound</span></div>
+          <div class="kb-row"><kbd>V</kbd><span>Revive (Game Over)</span></div>
+          <div class="kb-row"><kbd>H</kbd> / <kbd>?</kbd><span>Toggle This Window</span></div>
+        </div>
+        <button id="closeKeybindsBtn" class="arcade-btn primary">[ESC / H] CLOSE</button>
+      </div>
+    </div>
+
+    <!-- Pause Overlay -->
+    <div id="pauseOverlay" class="overlay hidden">
+      <div class="arcade-screen">
+        <h2 class="arcade-heading">PAUSED</h2>
+        <div class="arcade-actions">
+          <button id="resumeBtn" class="arcade-btn primary">[P / ESC] RESUME</button>
+          <button id="pauseRestartBtn" class="arcade-btn">[R] RESTART</button>
+          <button id="pauseKeybindsBtn" class="arcade-btn">[H] KEYBINDS</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over Overlay -->
+    <div id="gameOverOverlay" class="overlay hidden">
+      <div class="arcade-screen">
+        <h2 class="arcade-heading danger">VOID CONSUMED</h2>
+        <div id="newBestBadge" class="arcade-new-best hidden">NEW BEST!</div>
+        <div class="arcade-stats">
+          <div>SCORE <span id="finalScore">0</span></div>
+          <div>BEST <span id="finalBestScore">0</span></div>
+        </div>
+        <div class="arcade-actions">
+          <button id="reviveBtn" class="arcade-btn gold hidden">[V] REVIVE ONCE (AD)</button>
+          <button id="restartBtn" class="arcade-btn primary">[SPACE / ENTER] PLAY AGAIN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
